@@ -34,6 +34,8 @@ def main():
     bri_parser = subparsers.add_parser('bri', help='Set brightness level')
     bri_parser.add_argument('brightness', type=int)
 
+    subparsers.add_parser('list', help='list available bulbs')
+
     parser.add_argument('--light', type=int)
 
     bridge_addr = get_bridge_ip_addr()
@@ -46,6 +48,8 @@ def main():
         set_light_attribute(bridge, args.light, 'on', args.state == 'on')
     elif args.command == 'bri':
         set_light_attribute(bridge, args.light, 'bri', args.brightness)
+    elif args.command == 'list':
+        list_lights(bridge)
 
 
 if __name__ == '__main__':
