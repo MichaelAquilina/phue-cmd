@@ -1,5 +1,5 @@
+import argparse
 import os
-import sys
 
 from phue import Bridge
 
@@ -24,12 +24,23 @@ def get_bridge_ip_addr():
 
 
 def main():
+    parser = argparse.ArgumentParser()
+
+    subparsers = parser.add_subparsers(dest='command')
+
+    power_parser = subparsers.add_parser('power', help='set lights to on or off state')
+    power_parser.add_argument('state', choices=('on', 'off'))
+
+    parser.add_argument('--light', type=int)
+
     bridge_addr = get_bridge_ip_addr()
     bridge = Bridge(bridge_addr)
     bridge.connect()
 
-    if sys.argv[1] == 'set':
-        set_light_attribute(bridge, [1, 3], sys.argv[2], int(sys.argv[3]))
+    args = parser.parse_args()
+
+    if args.command == 'power':
+        set_light_attribute(bridge, args.light, 'on', args.state == 'on')
 
 
 if __name__ == '__main__':
