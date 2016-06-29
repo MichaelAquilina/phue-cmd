@@ -31,6 +31,9 @@ def main():
     power_parser = subparsers.add_parser('power', help='set lights to on or off state')
     power_parser.add_argument('state', choices=('on', 'off'))
 
+    bri_parser = subparsers.add_parser('bri', help='Set brightness level')
+    bri_parser.add_argument('brightness', type=int)
+
     parser.add_argument('--light', type=int)
 
     bridge_addr = get_bridge_ip_addr()
@@ -41,6 +44,8 @@ def main():
 
     if args.command == 'power':
         set_light_attribute(bridge, args.light, 'on', args.state == 'on')
+    elif args.command == 'bri':
+        set_light_attribute(bridge, args.light, 'bri', args.brightness)
 
 
 if __name__ == '__main__':
