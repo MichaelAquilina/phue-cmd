@@ -28,7 +28,9 @@ def main():
 
     subparsers = parser.add_subparsers(dest='command')
 
-    power_parser = subparsers.add_parser('power', help='set lights to on or off state')
+    power_parser = subparsers.add_parser(
+        'power', help='set lights to on or off state'
+    )
     power_parser.add_argument('state', choices=('on', 'off'))
 
     bri_parser = subparsers.add_parser('bri', help='Set brightness level')
